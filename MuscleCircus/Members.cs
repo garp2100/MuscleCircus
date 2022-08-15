@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace MuscleCircus
 {
-    internal class Class1
+    public abstract class Members
     {
+        public int Id { get; set; }
+        public string Name  { get; set; }
+
+        public string Address { get; set; }
     }
 }
