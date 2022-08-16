@@ -1,2 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using MuscleCircus;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+
+
+Clubs Detroit = new Clubs();
+
+Detroit.ListAllMembers();
