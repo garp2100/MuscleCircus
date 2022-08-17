@@ -24,27 +24,36 @@ namespace MuscleCircus
         {
             foreach (var member in MembersList)
             {
-                
-
-
                 Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
                 Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
                 Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
                 Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
                 Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
                 Console.WriteLine();
-
-
-
-
-
-
-
-
-
             }
         }
-           
+        public void RemoveMember(int removeThisID)
+        {
+            //MembersList.Contains.Where(x => removeThisID == memberPerson.ID);
 
+            MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
+            Console.WriteLine("Member was removed!");
+            //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", removeThisID));
+            ListAllMembers();
+        }
+
+        public void MemberCheckIn(int incomingMemberID)
+        {
+            var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
+            foreach (var member in found)
+            {
+                Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
+                //Console.WriteLine();
+            }
+        }
     }
 }
