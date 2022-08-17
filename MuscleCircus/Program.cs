@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 Clubs Detroit = new Clubs();
 
-Detroit.ListAllMembers();
+//Detroit.ListAllMembers();
 //Detroit.RemoveMember(50000001);
 
-Detroit.MemberCheckIn(11234);
+Detroit.MemberCheckIn(50000001);

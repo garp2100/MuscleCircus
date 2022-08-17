@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 
 namespace MuscleCircus
 {
@@ -45,15 +46,27 @@ namespace MuscleCircus
         public void MemberCheckIn(int incomingMemberID)
         {
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
-            foreach (var member in found)
+
+            if (found.Count() != 0)
             {
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member));
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
-                //Console.WriteLine();
+               
+                foreach (var member in found)
+                {
+                    Console.WriteLine("yo" + member.FirstName);
+
+                    //Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
+                    //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
+                    //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
+                    //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
+                    //Console.WriteLine();
+                }
             }
+            else
+            {
+                Console.WriteLine("That member doesn't exist!");
+
+            }
+
         }
     }
 }
