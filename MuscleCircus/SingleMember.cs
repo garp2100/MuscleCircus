@@ -19,7 +19,6 @@ namespace MuscleCircus
 
         public override void CheckIn()
         {
-
             Console.WriteLine("Please enter member's ID: ");
             string checkInID = Console.ReadLine();
 
