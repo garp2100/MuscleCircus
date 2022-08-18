@@ -16,9 +16,18 @@ namespace MuscleCircus
             Address = aAddress;
             HomeClub = aHomeClub.ToString();
         }
-        public override void CheckIn()
+
+        public GrandMember()
         {
-            throw new NotImplementedException();
+
         }
+
+        public static int MembershipPoints { get; set; }
+
+        public static void MembershipPointsAdd()
+        {
+            MembershipPoints += 10;
+        }
+
     }
 }

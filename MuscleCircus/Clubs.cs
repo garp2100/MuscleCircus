@@ -13,7 +13,7 @@ namespace MuscleCircus
         public string Name { get; set; }
         public string Address { get; set; }
 
-        List<Members> MembersList = new List<Members>
+       public List<Members> MembersList = new List<Members>
         {  
         new GrandMember(50000000,"Eddy", "Garcia", "100 Circus Way", Locations.Washington_DC),
         new GrandMember(50000001, "Gustavo", "Rivera", "5000 Chirpus Road", Locations.Miami),
@@ -33,8 +33,13 @@ namespace MuscleCircus
                 Console.WriteLine();
             }
         }
-        public void RemoveMember(int removeThisID)
+        public void RemoveMember()
         {
+
+            Console.Write("What member ID would you like to remove: ");
+            int removeThisID = int.Parse(Console.ReadLine());
+
+
             //MembersList.Contains.Where(x => removeThisID == memberPerson.ID);
 
             MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
@@ -43,8 +48,12 @@ namespace MuscleCircus
             ListAllMembers();
         }
 
-        public void MemberCheckIn(int incomingMemberID)
+        public void MemberCheckIn()//int incomingMemberID)
         {
+            Console.Write("Enter the member's ID: ");
+
+           int incomingMemberID = int.Parse(Console.ReadLine());
+
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
 
             if (found.Count() != 0)
@@ -59,11 +68,13 @@ namespace MuscleCircus
                     //Console.WriteLine();
                     if (member is GrandMember)
                     {
-                        Console.WriteLine("Grand Member " + member.FirstName);
+                        Console.WriteLine("Grand Member " + member.FirstName + " was checked in successfully.");
+                        GrandMember.MembershipPointsAdd();
+                        Console.WriteLine(GrandMember.MembershipPoints);
                     }
-                    else if (member is SingleMember) //&& member.HomeClub == Address)
+                    else if (member is SingleMember && member.HomeClub == Locations.Detroit.ToString())
                     {
-                        Console.WriteLine("Single Member " + member.FirstName);
+                        Console.WriteLine("Single Member " + member.FirstName + " was checked in successfully.");
                     }
                     else
                     {
@@ -76,5 +87,43 @@ namespace MuscleCircus
                 Console.WriteLine("That member doesn't exist!");
             }
         }
+
+        public  void AddMember(Members newMember)
+        {
+            Console.Write("What's the member's first name? ");
+            newMember.FirstName = Console.ReadLine();
+
+            Console.Clear();
+
+            Console.Write("What's the member's last name? ");
+            newMember.LastName = Console.ReadLine();
+
+            Console.Clear();
+
+            Console.Write("What's the member's address? ");
+            newMember.Address = Console.ReadLine();
+
+            newMember.HomeClub = Locations.Detroit.ToString();
+
+            Random rand = new Random();
+
+            if (newMember is GrandMember)
+            {
+                newMember.Id = rand.Next(500, 599);
+                
+            }
+            else
+            {
+                newMember.Id = rand.Next(100, 199);
+            }
+
+            
+
+            MembersList.Add(newMember);
+
+            ListAllMembers();
+        }
+
+
     }
 }
