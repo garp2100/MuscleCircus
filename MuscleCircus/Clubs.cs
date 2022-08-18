@@ -49,24 +49,32 @@ namespace MuscleCircus
 
             if (found.Count() != 0)
             {
-               
                 foreach (var member in found)
                 {
-                    Console.WriteLine("yo" + member.FirstName);
-
+                    //Console.WriteLine("Member: " + member.FirstName + " was checked in successfully");                   
                     //Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
                     //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
                     //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
                     //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
                     //Console.WriteLine();
+                    if (member is GrandMember)
+                    {
+                        Console.WriteLine("Grand Member " + member.FirstName);
+                    }
+                    else if (member is SingleMember) //&& member.HomeClub == Address)
+                    {
+                        Console.WriteLine("Single Member " + member.FirstName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("This isn't your home club!");
+                    }
                 }
             }
             else
             {
                 Console.WriteLine("That member doesn't exist!");
-
             }
-
         }
     }
 }
