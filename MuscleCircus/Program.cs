@@ -32,6 +32,7 @@ int menuChoice = int.Parse(Console.ReadLine());
             Detroit.MemberCheckIn();
             break;
         case 2:
+            Console.Clear();
             Console.WriteLine("Is this person going to be a Grand or Single member? (Grand/Single): ");
             string tierChoice = Console.ReadLine().ToLower();
 
@@ -45,6 +46,13 @@ int menuChoice = int.Parse(Console.ReadLine());
                 SingleMember NewMember = new SingleMember();
                 Detroit.AddMember(NewMember);
             }
+            else
+        {
+            Console.Clear();
+            Console.WriteLine("Not a valid input, try again.");
+            Thread.Sleep(2000);
+            goto case 2;
+        }
 
             break;
         case 3:
@@ -79,7 +87,8 @@ int menuChoice = int.Parse(Console.ReadLine());
     }
 
 
-Thread.Sleep(2500);
+Console.WriteLine("\nPress any key to return to the main menu");
+Console.ReadKey();
 
 Console.Clear();
 goto StartOfLoop;
