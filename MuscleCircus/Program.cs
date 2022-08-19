@@ -5,26 +5,17 @@ using System.ComponentModel;
 
 Clubs Detroit = new Clubs();
 
-//Detroit.ListAllMembers();
-//Detroit.RemoveMember(50000001);
-
-bool loopChoice = false;
-
-//do
-//{
 
     StartOfLoop:
     Console.WriteLine("Welcome to Muscle Circus of " + Locations.Detroit.ToString() + "!");
-
     Console.WriteLine("\nPlease select an option: ");
     Console.WriteLine("\n1. Check in a member");
     Console.WriteLine("2. Add a member");
     Console.WriteLine("3. Remove a member");
     Console.WriteLine("4. Print a bill of sales");
-    Console.WriteLine("5. Log off");
+    Console.WriteLine("5. Log off \n\n");
 
 int menuChoice = int.Parse(Console.ReadLine());
-
 
     switch (menuChoice)
     {
@@ -47,20 +38,19 @@ int menuChoice = int.Parse(Console.ReadLine());
                 Detroit.AddMember(NewMember);
             }
             else
-        {
-            Console.Clear();
-            Console.WriteLine("Not a valid input, try again.");
-            Thread.Sleep(2000);
-            goto case 2;
-        }
-
+            {
+                Console.Clear();
+                Console.WriteLine("Not a valid input, try again.");
+                Thread.Sleep(2000);
+        goto case 2;
+            }
             break;
         case 3:
             Detroit.RemoveMember();
 
             break;
         case 4:
-            Console.WriteLine("Thursday");
+        Detroit.PrintBillOfSales();
             break;
         case 5:
         Console.WriteLine("Are you sure you want to log off?");
@@ -92,24 +82,3 @@ Console.ReadKey();
 
 Console.Clear();
 goto StartOfLoop;
-
-//    Console.Write("Go back to main menu? (y/n) ");
-
-//            string loopInput = Console.ReadLine().ToLower();
-
-//            if (loopInput == "y")
-//            {
-//                loopChoice = true;
-//            }
-//            else if (loopInput == "n")
-//            {
-//                loopChoice = false;
-//            }
-//            else
-//            {
-//                Console.WriteLine("That wasn't a valid choice. Going to main menu...");
-//                Thread.Sleep(2500);
-//                loopChoice = true;
-//            }
-    
-//} while (loopChoice);

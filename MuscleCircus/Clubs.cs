@@ -72,11 +72,11 @@ namespace MuscleCircus
             ListAllMembers();
         }
 
-        public void MemberCheckIn()//int incomingMemberID)
+        public void MemberCheckIn()
         {
             Console.Write("Enter the member's ID: ");
 
-           int incomingMemberID = int.Parse(Console.ReadLine());
+            int incomingMemberID = int.Parse(Console.ReadLine());
 
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
 
@@ -98,8 +98,7 @@ namespace MuscleCircus
                     }
                     else if (member is SingleMember s  && s.HomeClub == this.Address)
                     {
-                        Console.WriteLine("Single Member " + s.FirstName + " was checked in successfully.");
-                     
+                        Console.WriteLine("Single Member " + s.FirstName + " was checked in successfully.");                     
                     }
                     else
                     {
@@ -113,9 +112,42 @@ namespace MuscleCircus
             }
         }
 
+        public void PrintBillOfSales()
+        {
+            bool loopChoice = true;
+            while (loopChoice)
+            {
+                Console.WriteLine("If you want to print only 1 member's bill of sale, press 1\n If you want to print all member's bill of sale, press 2");
+                int option = int.Parse(Console.ReadLine());
+                if (option == 1)
+                {
+                    Console.Write("Enter the member's ID: ");
 
+                    int incomingMemberID = int.Parse(Console.ReadLine());
 
+                    var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
 
+                    if (found.Count() != 0)
+                    {
+                        foreach (var member in found)
+                        {
+                            Console.WriteLine("something");
+                        }                      
+                        loopChoice = false;
+                    }
+                }
+                else if (option == 2)
+                {
+                    loopChoice = false;
+                }
+                else
+                {
+                    Console.WriteLine("invalid option");
+                    Thread.Sleep(2500);
+                    loopChoice = true;
+                }
+            }
+        }
 
         public  void AddMember(Members newMember)
         {
