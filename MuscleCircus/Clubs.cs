@@ -25,14 +25,36 @@ namespace MuscleCircus
         {
             foreach (var member in MembersList)
             {
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
-                Console.WriteLine();
+
+                if (member is SingleMember) 
+                {
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
+                    Console.WriteLine();
+
+                } 
+                else if (member is GrandMember)
+                {
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
+                    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
+                    Console.WriteLine();
+                }
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
+                //Console.WriteLine();
             }
+
+            
         }
+
         public void RemoveMember()
         {
 
