@@ -9,13 +9,13 @@ namespace MuscleCircus
 {
     public enum Locations
     {
-        Detroit,
-        Miami,
+        Detroit = 1,
+        Miami = 2,
         //[Description("Los Angeles")]
-        Los_Angeles,
+        Los_Angeles = 3,
        // [Description("Washington DC")]
-        Washington_DC,
-        Houston,
-        Atlanta
+        Washington_DC = 4,
+        Houston = 5,
+        Atlanta = 6
     }
 }

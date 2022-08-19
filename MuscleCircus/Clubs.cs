@@ -103,7 +103,21 @@ namespace MuscleCircus
             Console.Write("What's the member's address? ");
             newMember.Address = Console.ReadLine();
 
-            newMember.HomeClub = Locations.Detroit.ToString();
+            if (newMember is SingleMember)
+            {
+                Console.Write("Please choose a location that will be your home club: \n");
+
+                foreach (Locations location in Locations.GetValues(typeof(Locations)))
+                {
+                    Console.WriteLine(((int)location).ToString() + ". " + location.ToString().Replace("_", " "));
+                }
+                int homeClubChoice = int.Parse(Console.ReadLine());
+
+                var homeClubAdd = (Locations)homeClubChoice;
+                newMember.HomeClub = homeClubAdd.ToString();
+            } 
+
+            //newMember.HomeClub = Locations.Detroit.ToString();
 
             Random rand = new Random();
 
