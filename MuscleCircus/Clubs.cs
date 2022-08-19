@@ -15,8 +15,8 @@ namespace MuscleCircus
 
        public List<Members> MembersList = new List<Members>
         {  
-        new GrandMember(50000000,"Eddy", "Garcia", "100 Circus Way", Locations.Washington_DC),
-        new GrandMember(50000001, "Gustavo", "Rivera", "5000 Chirpus Road", Locations.Miami),
+        new GrandMember(50000000,"Eddy", "Garcia", "100 Circus Way"),
+        new GrandMember(50000001, "Gustavo", "Rivera", "5000 Chirpus Road"),
         new SingleMember(10000000, "Michael", "Swope", "123 HelloWorld Way", Locations.Los_Angeles),
         new SingleMember(10000001, "Jacob", "Magyar", "321 Woodward Ave", Locations.Detroit)
         };
@@ -25,14 +25,38 @@ namespace MuscleCircus
         {
             foreach (var member in MembersList)
             {
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
-                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
-                Console.WriteLine();
+                
+                member.ToString();
+
+                //if (member is SingleMember) 
+                //{
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
+                //    Console.WriteLine();
+
+                //} 
+                //else if (member is GrandMember)
+                //{
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
+                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
+                //    Console.WriteLine();
+                //}
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
+                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
+                //Console.WriteLine();
             }
+
+            
         }
+
         public void RemoveMember()
         {
 
@@ -72,9 +96,10 @@ namespace MuscleCircus
                         GrandMember.MembershipPointsAdd();
                         Console.WriteLine(GrandMember.MembershipPoints);
                     }
-                    else if (member is SingleMember && member.HomeClub == Locations.Detroit.ToString())
+                    else if (member is SingleMember s  && s.HomeClub == this.Address)
                     {
-                        Console.WriteLine("Single Member " + member.FirstName + " was checked in successfully.");
+                        Console.WriteLine("Single Member " + s.FirstName + " was checked in successfully.");
+                     
                     }
                     else
                     {
@@ -87,6 +112,10 @@ namespace MuscleCircus
                 Console.WriteLine("That member doesn't exist!");
             }
         }
+
+
+
+
 
         public  void AddMember(Members newMember)
         {
@@ -103,7 +132,7 @@ namespace MuscleCircus
             Console.Write("What's the member's address? ");
             newMember.Address = Console.ReadLine();
 
-            if (newMember is SingleMember)
+            if (newMember is SingleMember s)
             {
                 Console.Write("Please choose a location that will be your home club: \n");
 
@@ -114,7 +143,7 @@ namespace MuscleCircus
                 int homeClubChoice = int.Parse(Console.ReadLine());
 
                 var homeClubAdd = (Locations)homeClubChoice;
-                newMember.HomeClub = homeClubAdd.ToString();
+                s.HomeClub = homeClubAdd.ToString();
             } 
 
             //newMember.HomeClub = Locations.Detroit.ToString();

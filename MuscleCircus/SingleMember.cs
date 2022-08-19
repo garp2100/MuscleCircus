@@ -16,11 +16,23 @@ namespace MuscleCircus
             Address = aAddress;
             HomeClub = aHomeClub.ToString();
         }
-
+        public   string HomeClub { get; set; }
         public SingleMember()
         {
 
         }
+
+        public override string  ToString()
+        {
+            string finalString =
+            String.Format("{0, -15} {1, -15}", "ID: ", this.Id) + "\n" +
+            String.Format("{0, -15} {1, -15}", "First name: ", this.FirstName) + "\n" +
+            String.Format("{0, -15} {1, -15}", "Last name: ", this.LastName) + "\n" +
+            String.Format("{0, -15} {1, -15}", "Address: ", this.Address) + "\n" +
+            String.Format("{0, -15} {1, -15}", "Home club: ", HomeClub.ToString().Replace("_", " "));
+            return finalString;
+        }
+
 
     }
 }
