@@ -10,6 +10,12 @@ namespace MuscleCircus
 {
     public class Clubs
     {
+        public Clubs()
+        {
+            Name = "Muscle Circus of Detroit";
+            Address = Locations.Detroit.ToString();
+        }
+
         public string Name { get; set; }
         public string Address { get; set; }
 
@@ -67,6 +73,8 @@ namespace MuscleCircus
 
         public void MemberCheckIn()
         {
+            Console.Clear();
+            Console.WriteLine("Member check in - \n");
             Console.Write("Enter the member's ID: ");
 
             int incomingMemberID = int.Parse(Console.ReadLine());
@@ -78,19 +86,22 @@ namespace MuscleCircus
                 foreach (var member in found)
                 {
  
-                    if (member is GrandMember)
+                    if (member is GrandMember grand)
                     {
+                        Console.Clear();
                         Console.WriteLine("Grand Member " + member.FirstName + " was checked in successfully.");
-                        GrandMember.MembershipPointsAdd();
-                        Console.WriteLine(GrandMember.MembershipPoints);
+                        grand.MembershipPointsAdd();
+                        Console.WriteLine(grand.MembershipPoints);
                     }
-                    else if (member is SingleMember s  && s.HomeClub == this.Address)
+                    else if (member is SingleMember single  && single.HomeClub == this.Address)
                     {
-                        Console.WriteLine("Single Member " + s.FirstName + " was checked in successfully.");                     
+                        Console.Clear();
+                        Console.WriteLine("Single Member " + single.FirstName + " was checked in successfully.");                     
                     }
                     else
                     {
-                        Console.WriteLine("This isn't your home club!");
+                        Console.Clear();
+                        Console.WriteLine("This isn't your home club! You cannot out pizza the hut!");
                     }
                 }
             }
@@ -105,13 +116,44 @@ namespace MuscleCircus
             bool loopChoice = true;
             while (loopChoice)
             {
-                Console.WriteLine("Select from the following bill print options:\n\n1.Display bill of sale of a specifc person\n\n2.Display bill of sale of all members.");
-                int option = int.Parse(Console.ReadLine());
+                Console.Clear();
+                Console.WriteLine("Print Bill Of Sales Menu");
+                Console.WriteLine("_______________\n\n");
+                Console.WriteLine("Select from the following bill print options:\n\n1.Display bill of sale of a specific person\n\n2.Display bill of sale of all members.");
+
+                int option = 0;
+
+                try
+                {
+                    option = int.Parse(Console.ReadLine());
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Not a valid option. Press any key to start over.");
+                    Console.ReadKey();
+                    continue;
+                }
+
                 if (option == 1)
                 {
+                    BillOfSalesOption1:
+                    Console.Clear();
+                    Console.WriteLine("Print Bill Of Sales Menu");
+                    Console.WriteLine("_______________\n\n");
                     Console.Write("Enter the member's ID: ");
 
-                    int incomingMemberID = int.Parse(Console.ReadLine());
+                    int incomingMemberID = 0;
+
+                    try
+                    {
+                        incomingMemberID = int.Parse(Console.ReadLine());
+                    }
+                    catch (FormatException e)
+                    {
+                        Console.WriteLine("Not a valid option. Press any key to start over.");
+                        Console.ReadKey();
+                        goto BillOfSalesOption1;
+                    }
 
                     var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
 
@@ -119,49 +161,56 @@ namespace MuscleCircus
                     {
                         foreach (var member in found)
                         {
-                            if (member is GrandMember)
+                            if (member is GrandMember grand)
                             {
-
+                                Console.Clear();
+                                Console.WriteLine("Print Bill Of Sales Menu");
+                                Console.WriteLine("_______________\n\n");
                                 Console.WriteLine($"{ ((GrandMember)member).FirstName }'s Bill of sale:");
-                                Console.Write($"Amout due for the month of {(today.ToString("MMMM,yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
-                                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", GrandMember.MembershipPoints));
+                                Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
+                                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
 
                             }
-                            else if (member is SingleMember s)
+                            else if (member is SingleMember single)
                             {
-                                Console.WriteLine($"{s.FirstName}'s Bill of sale:");
-                                Console.Write($"Amout due for the month of {(today.ToString("MMMM,yyyy"))}: {s.CostOfMembership.ToString("C2")}\n");
+                                Console.Clear();
+                                Console.WriteLine("Print Bill Of Sales Menu");
+                                Console.WriteLine("_______________\n\n");
+                                Console.WriteLine($"{single.FirstName}'s Bill of sale:");
+                                Console.Write($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
 
-                            }
-                            else
-                            {
-                                Console.WriteLine("Bill of sale cannot be generated. :/");
                             }
                         }                      
-                        loopChoice = false;
                     }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Print Bill Of Sales Menu");
+                        Console.WriteLine("_______________\n\n");
+                        Console.WriteLine("Member ID does not exist");
+                    }
+                    loopChoice = false;
                 }
                 else if (option == 2)
                 {
+                    Console.Clear();
+                    Console.WriteLine("Print Bill Of Sales Menu");
+                    Console.WriteLine("_______________");
                     foreach (Members member in MembersList)
                     {
-                        if (member is GrandMember)
+                        if (member is GrandMember grand)
                         {
 
-                            Console.WriteLine($"\n\n{((GrandMember)member).FirstName}'s Bill of sale:");
-                            Console.Write($"Amout due for the month of {(today.ToString("MMMM,yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
-                            Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", GrandMember.MembershipPoints));
-
-                        }
-                        else if (member is SingleMember s)
-                        {
-                            Console.WriteLine($"\n\n{s.FirstName}'s Bill of sale:");
-                            Console.Write($"Amout due for the month of {(today.ToString("MMMM,yyyy"))}: {s.CostOfMembership.ToString("C2")}\n");
+                            Console.WriteLine($"\n\n{((GrandMember)member).FirstName}'s Bill of sale - ");
+                            Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
+                            Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
 
                         }
-                        else
+                        else if (member is SingleMember single)
                         {
-                            Console.WriteLine("\n\nBill of sale cannot be generated. :/");
+                            Console.WriteLine($"\n\n{single.FirstName}'s Bill of sale - ");
+                            Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
+
                         }
 
                     }
@@ -169,8 +218,8 @@ namespace MuscleCircus
                 }
                 else
                 {
-                    Console.WriteLine("Invalid option");
-                    Thread.Sleep(2500);
+                    Console.WriteLine("Not a valid option. Press any key to start over.");
+                    Console.ReadKey();
                     loopChoice = true;
                 }
             }
@@ -191,7 +240,7 @@ namespace MuscleCircus
             Console.Write("What's the member's address? ");
             newMember.Address = Console.ReadLine();
 
-            if (newMember is SingleMember s)
+            if (newMember is SingleMember single)
             {
                 Console.Write("Please choose a location that will be your home club: \n");
 
@@ -202,7 +251,7 @@ namespace MuscleCircus
                 int homeClubChoice = int.Parse(Console.ReadLine());
 
                 var homeClubAdd = (Locations)homeClubChoice;
-                s.HomeClub = homeClubAdd.ToString();
+                single.HomeClub = homeClubAdd.ToString();
             } 
 
             //newMember.HomeClub = Locations.Detroit.ToString();

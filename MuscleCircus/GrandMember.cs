@@ -24,9 +24,9 @@ namespace MuscleCircus
 
         }
 
-        public static int MembershipPoints { get; set; }
+        public int MembershipPoints { get; set; }
 
-        public static void MembershipPointsAdd()
+        public void MembershipPointsAdd()
         {
             MembershipPoints += 10;
         }
