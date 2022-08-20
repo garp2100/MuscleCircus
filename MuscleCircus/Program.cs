@@ -14,10 +14,27 @@ Clubs Detroit = new Clubs();
     Console.WriteLine("3. Remove a member");
     Console.WriteLine("4. Print a bill of sales");
     Console.WriteLine("5. Log off \n\n");
+int menuChoice;
 
-int menuChoice = int.Parse(Console.ReadLine());
+bool success = int.TryParse(Console.ReadLine(), out menuChoice);
+if (success)
+{
+    if (menuChoice >= 1 && menuChoice <= 5)
+    Console.WriteLine($"{menuChoice}.");
+    else
+    {
+        Console.WriteLine($"\n\nPlease enter a digit within the menu range.");
+        goto StartOfLoop;
+    }
+}
+else
+{
+    Console.WriteLine($"Please enter a digit.");
+    goto StartOfLoop;
+}
 
-    switch (menuChoice)
+
+switch (menuChoice)
     {
         case 1:
             Detroit.MemberCheckIn();

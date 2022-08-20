@@ -15,6 +15,7 @@ namespace MuscleCircus
             LastName = aLastName;
             Address = aAddress;
             HomeClub = aHomeClub.ToString();
+            CostOfMembership = 10m;
         }
         public   string HomeClub { get; set; }
         public SingleMember()

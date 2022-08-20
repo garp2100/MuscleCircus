@@ -15,7 +15,7 @@ namespace MuscleCircus
             FirstName = aFirstName;
             LastName = aLastName;
             Address = aAddress;
-
+            CostOfMembership = 20m;
 
         }
 

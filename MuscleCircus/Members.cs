@@ -13,6 +13,7 @@ namespace MuscleCircus
         public string LastName { get; set; }
         public string Address { get; set; }
         List<Members> MemberList { get; set; }
+        public decimal CostOfMembership { get; set; }
     }
 
 }
