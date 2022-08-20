@@ -13,45 +13,26 @@ namespace MuscleCircus
         public string Name { get; set; }
         public string Address { get; set; }
 
-       public List<Members> MembersList = new List<Members>
+        // Adding days to a date  
+        readonly DateTime today = DateTime.Now; // 12/20/2015 11:48:09 AM  
+        //DateTime newDate2 = today.AddDays(30); // Adding one month(as 30 days)  
+        //Console.WriteLine(newDate2); // 1/19/2016 11:48:09 AM
+
+        public List<Members> MembersList = new List<Members>
         {  
-        new GrandMember(50000000,"Eddy", "Garcia", "100 Circus Way"),
-        new GrandMember(50000001, "Gustavo", "Rivera", "5000 Chirpus Road"),
-        new SingleMember(10000000, "Michael", "Swope", "123 HelloWorld Way", Locations.Los_Angeles),
-        new SingleMember(10000001, "Jacob", "Magyar", "321 Woodward Ave", Locations.Detroit)
+        new GrandMember(50,"Eddy", "Garcia", "100 Circus Way"),
+        new GrandMember(51, "Gustavo", "Rivera", "5000 Chirpus Road"),
+        new SingleMember(10, "Michael", "Swope", "123 HelloWorld Way", Locations.Los_Angeles),
+        new SingleMember(11, "Jacob", "Magyar", "321 Woodward Ave", Locations.Detroit)
         };
 
         public void ListAllMembers()
         {
-            foreach (var member in MembersList)
+            foreach (Members member in MembersList)
             {
                 
                 member.ToString();
 
-                //if (member is SingleMember) 
-                //{
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
-                //    Console.WriteLine();
-
-                //} 
-                //else if (member is GrandMember)
-                //{
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
-                //    Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
-                //    Console.WriteLine();
-                //}
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "ID: ", member.Id));
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
-                //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
-                //Console.WriteLine();
             }
 
             
@@ -60,16 +41,28 @@ namespace MuscleCircus
         public void RemoveMember()
         {
 
+
             Console.Write("What member ID would you like to remove: ");
             int removeThisID = int.Parse(Console.ReadLine());
 
+            var found = MembersList.FindAll(memberPerson => memberPerson.Id == removeThisID);
+            if (found.Count() != 0)
+            {
 
-            //MembersList.Contains.Where(x => removeThisID == memberPerson.ID);
+                foreach (var person in found)
+                {
+                    MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
 
-            MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
-            Console.WriteLine("Member was removed!");
-            //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", removeThisID));
-            ListAllMembers();
+                    Console.WriteLine($"{person.FirstName} with ID of {person.Id} was removed successfully.");
+
+                }
+                ListAllMembers();
+            }
+            else
+            {
+                Console.WriteLine("No Member found to remove.");
+            }
+
         }
 
         public void MemberCheckIn()
@@ -84,12 +77,7 @@ namespace MuscleCircus
             {
                 foreach (var member in found)
                 {
-                    //Console.WriteLine("Member: " + member.FirstName + " was checked in successfully");                   
-                    //Console.WriteLine(String.Format("{0, -15} {1, -15}", "First name: ", member.FirstName));
-                    //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Last name: ", member.LastName));
-                    //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Address: ", member.Address));
-                    //Console.WriteLine(String.Format("{0, -15} {1, -15}", "Home club: ", member.HomeClub.ToString().Replace("_", " ")));
-                    //Console.WriteLine();
+ 
                     if (member is GrandMember)
                     {
                         Console.WriteLine("Grand Member " + member.FirstName + " was checked in successfully.");
@@ -117,7 +105,7 @@ namespace MuscleCircus
             bool loopChoice = true;
             while (loopChoice)
             {
-                Console.WriteLine("If you want to print only 1 member's bill of sale, press 1\n If you want to print all member's bill of sale, press 2");
+                Console.WriteLine("Select from the following bill print options:\n\n1.Display bill of sale of a specifc person\n\n2.Display bill of sale of all members.");
                 int option = int.Parse(Console.ReadLine());
                 if (option == 1)
                 {
@@ -131,18 +119,57 @@ namespace MuscleCircus
                     {
                         foreach (var member in found)
                         {
-                            Console.WriteLine("something");
+                            if (member is GrandMember)
+                            {
+
+                                Console.WriteLine($"{ ((GrandMember)member).FirstName }'s Bill of sale:");
+                                Console.Write($"Amout due for the month of {(today.ToString("MMMM,yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
+                                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", GrandMember.MembershipPoints));
+
+                            }
+                            else if (member is SingleMember s)
+                            {
+                                Console.WriteLine($"{s.FirstName}'s Bill of sale:");
+                                Console.Write($"Amout due for the month of {(today.ToString("MMMM,yyyy"))}: {s.CostOfMembership.ToString("C2")}\n");
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Bill of sale cannot be generated. :/");
+                            }
                         }                      
                         loopChoice = false;
                     }
                 }
                 else if (option == 2)
                 {
+                    foreach (Members member in MembersList)
+                    {
+                        if (member is GrandMember)
+                        {
+
+                            Console.WriteLine($"\n\n{((GrandMember)member).FirstName}'s Bill of sale:");
+                            Console.Write($"Amout due for the month of {(today.ToString("MMMM,yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
+                            Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", GrandMember.MembershipPoints));
+
+                        }
+                        else if (member is SingleMember s)
+                        {
+                            Console.WriteLine($"\n\n{s.FirstName}'s Bill of sale:");
+                            Console.Write($"Amout due for the month of {(today.ToString("MMMM,yyyy"))}: {s.CostOfMembership.ToString("C2")}\n");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("\n\nBill of sale cannot be generated. :/");
+                        }
+
+                    }
                     loopChoice = false;
                 }
                 else
                 {
-                    Console.WriteLine("invalid option");
+                    Console.WriteLine("Invalid option");
                     Thread.Sleep(2500);
                     loopChoice = true;
                 }
