@@ -30,7 +30,8 @@ namespace MuscleCircus
             String.Format("{0, -15} {1, -15}", "First name: ", this.FirstName) + "\n" +
             String.Format("{0, -15} {1, -15}", "Last name: ", this.LastName) + "\n" +
             String.Format("{0, -15} {1, -15}", "Address: ", this.Address) + "\n" +
-            String.Format("{0, -15} {1, -15}", "Home club: ", HomeClub.ToString().Replace("_", " "));
+            String.Format("{0, -15} {1, -15}", "Home club: ", HomeClub.ToString().Replace("_", " ")) + "\n";
+
             return finalString;
         }
 

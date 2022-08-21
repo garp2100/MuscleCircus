@@ -34,38 +34,150 @@ namespace MuscleCircus
 
         public void ListAllMembers()
         {
-            foreach (Members member in MembersList)
-            {
-                
-                member.ToString();
+            Console.Clear();
+            Console.WriteLine("List All Members Menu");
+            Console.WriteLine("_______________\n");
 
+            List<Members> listOrderedGrand = MembersList.Where(x => x is GrandMember).ToList();
+            List<Members> listOrderedSingle = MembersList.Where(x => x is SingleMember).ToList();
+
+            foreach (Members member in listOrderedGrand) 
+            {
+                Console.WriteLine(member.ToString());
             }
 
-            
+            foreach (Members member in listOrderedSingle) 
+            {
+                Console.WriteLine(member.ToString());
+            }
         }
 
         public void RemoveMember()
         {
-
+            Console.Clear();
+            Console.WriteLine("Remove Member Menu");
+            Console.WriteLine("_______________\n");
 
             Console.Write("What member ID would you like to remove: ");
             int removeThisID = int.Parse(Console.ReadLine());
 
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == removeThisID);
+
+            RemoveMemberLabel:
             if (found.Count() != 0)
             {
-
                 foreach (var person in found)
                 {
-                    MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
+                    Console.Clear();
+                    Console.WriteLine("Remove Member Menu");
+                    Console.WriteLine("_______________\n");
+                    Console.WriteLine("Member found: ");
 
-                    Console.WriteLine($"{person.FirstName} with ID of {person.Id} was removed successfully.");
+                    if (person is GrandMember grand)
+                    {
+                        string finalString =
+                            String.Format("{0, -15} {1, -15}", "ID: ", grand.Id) + "\n" +
+                            String.Format("{0, -15} {1, -15}", "First name: ", grand.FirstName) + "\n" +
+                            String.Format("{0, -15} {1, -15}", "Last name: ", grand.LastName) + "\n" +
+                            String.Format("{0, -15} {1, -15}", "Address: ", grand.Address) + "\n" +
+                            String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints) + "\n";
 
+                        Console.WriteLine(finalString);
+
+                        Console.WriteLine("Are you sure you want to remove this member? (y/n)");
+                        Console.WriteLine(); //line spacing
+                        string removeChoice = Console.ReadLine().ToLower();
+
+
+                        if (removeChoice == "y")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Remove Member Menu");
+                            Console.WriteLine("_______________\n");
+                            MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
+                            Console.WriteLine(grand.FirstName + " " + grand.LastName + " was removed successfully\n");
+                            Console.WriteLine("Going to the List All Members menu...");
+                            Thread.Sleep(2500);
+                            ListAllMembers();
+                        }
+                        else if (removeChoice == "n")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Remove Member Menu");
+                            Console.WriteLine("_______________\n");
+                            Console.WriteLine(grand.FirstName + " " + grand.LastName + " was not removed\n");
+                            Console.WriteLine("Going to the List All Members menu...");
+                            Thread.Sleep(2500);
+                            ListAllMembers();
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nInvalid option. Press any key to try again.");
+                            Console.ReadKey();
+                            goto RemoveMemberLabel;
+                        }
+                    }
+                    else if (person is SingleMember single) 
+                    {
+                        string finalString =
+                            String.Format("{0, -15} {1, -15}", "ID: ", single.Id) + "\n" +
+                            String.Format("{0, -15} {1, -15}", "First name: ", single.FirstName) + "\n" +
+                            String.Format("{0, -15} {1, -15}", "Last name: ", single.LastName) + "\n" +
+                            String.Format("{0, -15} {1, -15}", "Address: ", single.Address) + "\n" +
+                            String.Format("{0, -15} {1, -15}", "Home club: ", single.HomeClub.ToString().Replace("_", " ")) + "\n";
+
+                        Console.Clear();
+                        Console.WriteLine("Remove Member Menu");
+                        Console.WriteLine("_______________\n");
+                        Console.WriteLine("Member found: ");
+                        Console.WriteLine(finalString);
+
+                        Console.WriteLine("Are you sure you want to remove this member? (y/n)");
+                        Console.WriteLine(); //line spacing
+                        string removeChoice = Console.ReadLine().ToLower();
+
+
+                        if (removeChoice == "y")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Remove Member Menu");
+                            Console.WriteLine("_______________\n");
+                            MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
+                            Console.WriteLine(single.FirstName + " " + single.LastName + " was removed successfully\n");
+                            Console.WriteLine("Going to the List All Members menu...");
+                            Thread.Sleep(2500);
+                            ListAllMembers();
+                        }
+                        else if (removeChoice == "n")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Remove Member Menu");
+                            Console.WriteLine("_______________\n");
+                            Console.WriteLine(single.FirstName + " " + single.LastName + " was not removed\n");
+                            Console.WriteLine("Going to the List All Members menu...");
+                            Thread.Sleep(2500);
+                            ListAllMembers();
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nInvalid option. Press any key to try again.");
+                            Console.ReadKey();
+                            goto RemoveMemberLabel;
+                        }
+                    }
                 }
-                ListAllMembers();
+                    //MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
+
+                    //Console.WriteLine($"{person.FirstName} {person.LastName} with the ID number of " +
+                    //    $"{person.Id} was removed successfully.");
+                    //Thread.Sleep(2500);
+
             }
             else
             {
+                Console.Clear();
+                Console.WriteLine("Remove Member Menu");
+                Console.WriteLine("_______________\n");
                 Console.WriteLine("No Member found to remove.");
             }
 
@@ -73,41 +185,70 @@ namespace MuscleCircus
 
         public void MemberCheckIn()
         {
+            bool checkInLoop = true;
+            while (checkInLoop) { 
             Console.Clear();
-            Console.WriteLine("Member check in - \n");
+            Console.WriteLine("Member Check In Menu");
+            Console.WriteLine("_______________\n");
             Console.Write("Enter the member's ID: ");
 
-            int incomingMemberID = int.Parse(Console.ReadLine());
+            int incomingMemberID = 0;
+
+            try
+            {
+                incomingMemberID = int.Parse(Console.ReadLine());
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Not a valid option. Press any key to start over.");
+                Console.ReadKey();
+                continue;
+            }
 
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
 
-            if (found.Count() != 0)
-            {
-                foreach (var member in found)
+                if (found.Count() != 0)
                 {
- 
-                    if (member is GrandMember grand)
+                    foreach (var member in found)
                     {
-                        Console.Clear();
-                        Console.WriteLine("Grand Member " + member.FirstName + " was checked in successfully.");
-                        grand.MembershipPointsAdd();
-                        Console.WriteLine(grand.MembershipPoints);
-                    }
-                    else if (member is SingleMember single  && single.HomeClub == this.Address)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Single Member " + single.FirstName + " was checked in successfully.");                     
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("This isn't your home club! You cannot out pizza the hut!");
+
+                        if (member is GrandMember grand)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Member Check In Menu");
+                            Console.WriteLine("_______________\n");
+                            Console.WriteLine("Grand Member " + member.FirstName + " was checked in successfully.\n");
+                            grand.MembershipPointsAdd();
+                            Console.WriteLine(member.FirstName + "'s " + "membership points: " + grand.MembershipPoints + "\n");
+                            checkInLoop = false;
+                        }
+                        else if (member is SingleMember single && single.HomeClub == this.Address)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Member Check In Menu");
+                            Console.WriteLine("_______________\n");
+                            Console.WriteLine("Single Member " + single.FirstName + " was checked in successfully.\n");
+                            checkInLoop = false;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Member Check In Menu");
+                            Console.WriteLine("_______________\n");
+                            Console.WriteLine("Single Member: " + member.FirstName + " " + member.LastName + "\n");
+                            Console.WriteLine("This isn't their home club! You cannot out pizza the hut!\n");
+                            checkInLoop = false;
+                        }
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine("That member doesn't exist!");
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Member Check In Menu");
+                    Console.WriteLine("_______________\n");
+                    Console.WriteLine("That member doesn't exist!");
+                    checkInLoop = false;
+                }
             }
         }
 
@@ -227,32 +368,45 @@ namespace MuscleCircus
 
         public  void AddMember(Members newMember)
         {
+            Console.Clear();
+            Console.WriteLine("Add a Member Menu");
+            Console.WriteLine("____________\n");
             Console.Write("What's the member's first name? ");
             newMember.FirstName = Console.ReadLine();
 
             Console.Clear();
-
+            Console.WriteLine("Add a Member Menu");
+            Console.WriteLine("____________\n");
             Console.Write("What's the member's last name? ");
             newMember.LastName = Console.ReadLine();
 
             Console.Clear();
-
+            Console.WriteLine("Add a Member Menu");
+            Console.WriteLine("____________\n");
             Console.Write("What's the member's address? ");
             newMember.Address = Console.ReadLine();
 
             if (newMember is SingleMember single)
             {
+                Console.Clear();
+                Console.WriteLine("Add a Member Menu");
+                Console.WriteLine("____________\n");
                 Console.Write("Please choose a location that will be your home club: \n");
 
                 foreach (Locations location in Locations.GetValues(typeof(Locations)))
                 {
                     Console.WriteLine(((int)location).ToString() + ". " + location.ToString().Replace("_", " "));
                 }
+
+                Console.WriteLine(); //Line spacing
+
                 int homeClubChoice = int.Parse(Console.ReadLine());
 
                 var homeClubAdd = (Locations)homeClubChoice;
                 single.HomeClub = homeClubAdd.ToString();
-            } 
+            }
+
+            
 
             //newMember.HomeClub = Locations.Detroit.ToString();
 
@@ -261,20 +415,20 @@ namespace MuscleCircus
             if (newMember is GrandMember)
             {
                 newMember.Id = rand.Next(500, 599);
-                
             }
             else
             {
                 newMember.Id = rand.Next(100, 199);
             }
 
-            
-
             MembersList.Add(newMember);
+
+            Console.WriteLine();
+            Console.WriteLine(newMember.FirstName + " " + newMember.LastName + " was successfully added!");
+            Console.WriteLine("\nListing all members now...");
+            Thread.Sleep(2500);
 
             ListAllMembers();
         }
-
-
     }
 }
