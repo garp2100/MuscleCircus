@@ -5,16 +5,17 @@ using System.ComponentModel;
 
 Clubs Detroit = new Clubs();
 
-    StartOfLoop:
-    Console.WriteLine("Main Menu");
-    Console.WriteLine("____________\n");
-    Console.WriteLine("Welcome to "+ Detroit.Name + "!");
-    Console.WriteLine("\nPlease select an option: ");
-    Console.WriteLine("\n1. Check in a member");
-    Console.WriteLine("2. Add a member");
-    Console.WriteLine("3. Remove a member");
-    Console.WriteLine("4. Print a bill of sales");
-    Console.WriteLine("5. Log off \n\n");
+StartOfLoop:
+Console.WriteLine("Main Menu");
+Console.WriteLine("____________\n");
+Console.WriteLine("Welcome to "+ Detroit.Name + "!");
+Console.WriteLine("\nPlease select an option: ");
+Console.WriteLine("\n1. Check in a member");
+Console.WriteLine("2. Add a member");
+Console.WriteLine("3. Remove a member");
+Console.WriteLine("4. Print a bill of sales");
+Console.WriteLine("5. Log off \n");
+
 int menuChoice;
 
 bool success = int.TryParse(Console.ReadLine(), out menuChoice);
@@ -24,13 +25,19 @@ if (success)
     Console.WriteLine($"{menuChoice}.");
     else
     {
-        Console.WriteLine($"\n\nPlease enter a digit within the menu range.");
+        Console.WriteLine("\nPlease enter a digit within the menu range.");
+        Console.WriteLine("\nPress any key to go back to main menu");
+        Console.ReadKey();
+        Console.Clear();
         goto StartOfLoop;
     }
 }
 else
 {
-    Console.WriteLine($"Please enter a digit.");
+    Console.WriteLine("\nPlease enter a valid option.");
+    Console.WriteLine("\nPress any key to go back to main menu");
+    Console.ReadKey();
+    Console.Clear();
     goto StartOfLoop;
 }
 
@@ -65,8 +72,7 @@ switch (menuChoice)
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine("Not a valid input. Press any key to start over");
+                Console.WriteLine("\nNot a valid input. Press any key to start over");
                 Console.ReadKey();
                 goto case 2;
             }
@@ -81,8 +87,8 @@ switch (menuChoice)
         case 5:
         Console.Clear();
         Console.WriteLine("Log Off Menu");
-        Console.WriteLine("____________\n\n");
-        Console.WriteLine("Are you sure you want to log off?");
+        Console.WriteLine("____________\n");
+        Console.WriteLine("Are you sure you want to log off? (y/n)");
 
         string logOffInput = Console.ReadLine().ToLower();
 
@@ -90,7 +96,7 @@ switch (menuChoice)
         {
             Console.Clear();
             Console.WriteLine("Log Off Menu");
-            Console.WriteLine("____________\n\n");
+            Console.WriteLine("____________\n");
             Console.WriteLine("Goodbye! \n\nI am your father’s brother’s nephew’s cousin’s former roommate.");
             Thread.Sleep(2500);
             Environment.Exit(0);
@@ -99,21 +105,17 @@ switch (menuChoice)
         {
             Console.Clear();
             Console.WriteLine("Log Off Menu");
-            Console.WriteLine("____________\n\n");
+            Console.WriteLine("____________\n");
             Console.WriteLine("Log off cancelled");
 
         }
         else
         {
-            Console.Clear();
-            Console.WriteLine("Log Off Menu");
-            Console.WriteLine("____________\n\n");
-            Console.WriteLine("That wasn't a valid choice.");
+            Console.WriteLine("\nNot a valid input.");
             break;
         }
         break;
     }
-
 
 Console.WriteLine("\nPress any key to return to the main menu");
 Console.ReadKey();
