@@ -50,6 +50,9 @@ namespace MuscleCircus
             {
                 Console.WriteLine(member.ToString());
             }
+
+            Console.WriteLine("\nPress any key to return to the main menu");
+            Console.ReadKey();
         }
 
         public void RemoveMember()
@@ -57,7 +60,8 @@ namespace MuscleCircus
             BeginRemoveMember:
             Console.Clear();
             Console.WriteLine("Remove Member Menu");
-            Console.WriteLine("_______________\n");
+            Console.WriteLine("_______________");
+            Console.WriteLine("(Enter \"0\" to return to the main menu)\n");
 
             Console.Write("What member ID would you like to remove: ");
             int removeThisID = 0;
@@ -73,10 +77,17 @@ namespace MuscleCircus
                 goto BeginRemoveMember;
             }
 
+
+
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == removeThisID);
 
             MemberFound:
-            if (found.Count() != 0)
+
+            if (removeThisID == 0)
+            {
+                Thread.Sleep(0);
+            }
+            else if (found.Count() != 0)
             {
                 foreach (var person in found)
                 {
@@ -191,6 +202,8 @@ namespace MuscleCircus
                 Console.WriteLine("Remove Member Menu");
                 Console.WriteLine("_______________\n");
                 Console.WriteLine("No Member found to remove");
+                Console.WriteLine("\nPress any key to return to the main menu");
+                Console.ReadKey();
             }
 
         }
@@ -201,7 +214,9 @@ namespace MuscleCircus
             while (checkInLoop) { 
             Console.Clear();
             Console.WriteLine("Member Check In Menu");
-            Console.WriteLine("_______________\n");
+            Console.WriteLine("_______________");
+            Console.WriteLine("(Enter \"0\" to return to the main menu)\n");
+
             Console.Write("Enter the member's ID: ");
 
             int incomingMemberID = 0;
@@ -220,8 +235,11 @@ namespace MuscleCircus
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
 
                 DateTime dt = DateTime.Now;
-
-                if (found.Count() != 0)
+                if (incomingMemberID == 0) 
+                {
+                    checkInLoop = false;
+                }
+                else if (found.Count() != 0)
                 {
                     foreach (var member in found)
                     {
@@ -235,6 +253,8 @@ namespace MuscleCircus
                             grand.MembershipPointsAdd();
                             Console.WriteLine(member.FirstName + "'s " + "membership points: " + grand.MembershipPoints + "\n");
                             checkInLoop = false;
+                            Console.WriteLine("\nPress any key to return to the main menu");
+                            Console.ReadKey();
                         }
                         else if (member is SingleMember single && single.HomeClub == this.Address)
                         {
@@ -243,6 +263,8 @@ namespace MuscleCircus
                             Console.WriteLine("_______________\n");
                             Console.WriteLine("Single Member " + single.FirstName + " was checked in successfully at " + dt.ToLongTimeString() + "\n");
                             checkInLoop = false;
+                            Console.WriteLine("\nPress any key to return to the main menu");
+                            Console.ReadKey();
                         }
                         else
                         {
@@ -251,6 +273,8 @@ namespace MuscleCircus
                             Console.WriteLine("_______________\n");
                             Console.WriteLine("Single Member: " + member.FirstName + " " + member.LastName + "\n");
                             Console.WriteLine("This isn't their home club! You cannot out pizza the hut!\n");
+                            Console.WriteLine("\nPress any key to return to the main menu");
+                            Console.ReadKey();
                             checkInLoop = false;
                         }
                     }
@@ -260,8 +284,10 @@ namespace MuscleCircus
                     Console.Clear();
                     Console.WriteLine("Member Check In Menu");
                     Console.WriteLine("_______________\n");
-                    Console.WriteLine("Member ID " + incomingMemberID + " isn't assigned to a member!");
-                    checkInLoop = false;
+                    Console.WriteLine("Member ID " + incomingMemberID + " isn't assigned to a member!\n");
+                    Console.WriteLine("\nPress any key to start over");
+                    Console.ReadKey();
+                    checkInLoop = true;
                 }
             }
         }
@@ -273,9 +299,9 @@ namespace MuscleCircus
             {
                 Console.Clear();
                 Console.WriteLine("Print Bill Of Sales Menu");
-                Console.WriteLine("_______________\n\n");
-                Console.WriteLine("Select from the following bill print options:\n\n1.Display bill of sale of a specific person\n\n2.Display bill of sale of all members");
-                Console.WriteLine(); //Line spacing
+                Console.WriteLine("_______________");
+                Console.WriteLine("(Enter \"0\" to return to the main menu)\n\n");
+                Console.WriteLine("Select from the following bill print options:\n\n1.Display bill of sale of a specific person\n\n2.Display bill of sale of all members\n");
                 int option = 0;
 
                 try
@@ -289,13 +315,19 @@ namespace MuscleCircus
                     continue;
                 }
 
-                if (option == 1)
+                if (option == 0) 
+                {
+                    loopChoice = false;
+                }
+                else if (option == 1)
                 {
                 BillOfSalesOption1:
                     Console.Clear();
                     Console.WriteLine("Print Bill Of Sales Menu");
-                    Console.WriteLine("_______________\n\n");
+                    Console.WriteLine("_______________");
+                    Console.WriteLine("(Enter \"0\" to return to the main menu)\n\n");
                     Console.Write("Enter the member's ID: ");
+                    
 
                     int incomingMemberID = 0;
 
@@ -311,8 +343,11 @@ namespace MuscleCircus
                     }
 
                     var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
-
-                    if (found.Count() != 0)
+                    if (incomingMemberID == 0)
+                    {
+                        loopChoice = false;
+                    }
+                    else if (found.Count() != 0)
                     {
                         foreach (var member in found)
                         {
@@ -321,7 +356,7 @@ namespace MuscleCircus
                                 Console.Clear();
                                 Console.WriteLine("Print Bill Of Sales Menu");
                                 Console.WriteLine("_______________\n\n");
-                                Console.WriteLine($"{((GrandMember)member).FirstName}'s Bill of sale:");
+                                Console.WriteLine($"{((GrandMember)member).FirstName} {member.LastName} (ID:{member.Id}) | Bill of sale:");
                                 Console.Write($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
                                 Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints + "\n"));
 
@@ -331,17 +366,22 @@ namespace MuscleCircus
                                 Console.Clear();
                                 Console.WriteLine("Print Bill Of Sales Menu");
                                 Console.WriteLine("_______________\n\n");
-                                Console.WriteLine($"{single.FirstName}'s Bill of sale:");
+                                Console.WriteLine($"{single.FirstName} {member.LastName} (ID:{member.Id}) | Bill of sale:");
                                 Console.WriteLine($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
                             }
+                            Console.WriteLine("\nPress any key to return to the main menu");
+                            Console.ReadKey();
                         }
                     }
                     else
                     {
                         Console.Clear();
                         Console.WriteLine("Print Bill Of Sales Menu");
-                        Console.WriteLine("_______________\n\n");
+                        Console.WriteLine("_______________\n");
                         Console.WriteLine("Member ID does not exist");
+                        Console.WriteLine("\nPress any key to return to try again");
+                        Console.ReadKey();
+                        goto BillOfSalesOption1;
                     }
                     loopChoice = false;
                 }
@@ -356,7 +396,7 @@ namespace MuscleCircus
                         if (member is GrandMember grand)
                         {
 
-                            Console.WriteLine($"\n\n{((GrandMember)member).FirstName}'s Bill of sale - ");
+                            Console.WriteLine($"\n\n{((GrandMember)member).FirstName} {member.LastName} (ID:{member.Id}) | Bill of sale - ");
                             Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
                             Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
 
@@ -367,10 +407,13 @@ namespace MuscleCircus
                     {
                         if (member is SingleMember single)
                         {
-                            Console.WriteLine($"\n\n{single.FirstName}'s Bill of sale - ");
+                            Console.WriteLine($"\n\n{single.FirstName} {member.LastName} (ID:{member.Id}) | Bill of sale - ");
                             Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
                         }
                     }
+
+                    Console.WriteLine("\nPress any key to return to the main menu");
+                    Console.ReadKey();
 
                     //foreach (Members member in MembersList)
                     //{
@@ -406,19 +449,19 @@ namespace MuscleCircus
             Console.Clear();
             Console.WriteLine("Add a Member Menu");
             Console.WriteLine("____________\n");
-            Console.Write("What's the member's first name? ");
+            Console.Write("What's the member's first name?: ");
             newMember.FirstName = Console.ReadLine();
 
             Console.Clear();
             Console.WriteLine("Add a Member Menu");
             Console.WriteLine("____________\n");
-            Console.Write("What's the member's last name? ");
+            Console.Write("What's the member's last name?: ");
             newMember.LastName = Console.ReadLine();
 
             Console.Clear();
             Console.WriteLine("Add a Member Menu");
             Console.WriteLine("____________\n");
-            Console.Write("What's the member's address? ");
+            Console.Write("What's the member's address? (Address Number and Street Name only): ");
             newMember.Address = Console.ReadLine();
 
 
@@ -428,7 +471,7 @@ namespace MuscleCircus
                 Console.Clear();
                 Console.WriteLine("Add a Member Menu");
                 Console.WriteLine("____________\n");
-                Console.Write("Please choose a location that will be your home club: \n");
+                Console.Write("Please choose a location that will be your home club: \n\n");
 
                 foreach (Locations location in Locations.GetValues(typeof(Locations)))
                 {
@@ -477,7 +520,9 @@ namespace MuscleCircus
 
             MembersList.Add(newMember);
 
-            Console.WriteLine();
+            Console.Clear();
+            Console.WriteLine("Add a Member Menu");
+            Console.WriteLine("____________\n");
             Console.WriteLine(newMember.FirstName + " " + newMember.LastName + " was successfully added!");
             Console.WriteLine("\nListing all members now...");
             Thread.Sleep(2500);
