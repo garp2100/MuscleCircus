@@ -6,6 +6,8 @@ using System.ComponentModel;
 Clubs Detroit = new Clubs();
 
     StartOfLoop:
+    Console.WriteLine("Main Menu");
+    Console.WriteLine("____________\n");
     Console.WriteLine("Welcome to "+ Detroit.Name + "!");
     Console.WriteLine("\nPlease select an option: ");
     Console.WriteLine("\n1. Check in a member");
@@ -40,10 +42,10 @@ switch (menuChoice)
             break;
         case 2:
             Console.Clear();
-            Console.WriteLine("Add a member menu -");
+            Console.WriteLine("Add a Member Menu");
             Console.WriteLine("____________\n");
             Console.WriteLine("Is this person going to be a Grand or Single member? (grand/single) ");
-            Console.WriteLine("(Enter \"x\" to return to the main menu)");
+            Console.WriteLine("(Enter \"x\" to return to the main menu)\n");
             string tierChoice = Console.ReadLine().ToLower();
         
         if (tierChoice == "grand")
@@ -78,7 +80,7 @@ switch (menuChoice)
             break;
         case 5:
         Console.Clear();
-        Console.WriteLine("Log off menu");
+        Console.WriteLine("Log Off Menu");
         Console.WriteLine("____________\n\n");
         Console.WriteLine("Are you sure you want to log off?");
 
@@ -87,7 +89,7 @@ switch (menuChoice)
         if (logOffInput == "y")
         {
             Console.Clear();
-            Console.WriteLine("Log off menu");
+            Console.WriteLine("Log Off Menu");
             Console.WriteLine("____________\n\n");
             Console.WriteLine("Goodbye! \n\nI am your father’s brother’s nephew’s cousin’s former roommate.");
             Thread.Sleep(2500);
@@ -96,7 +98,7 @@ switch (menuChoice)
         else if (logOffInput == "n")
         {
             Console.Clear();
-            Console.WriteLine("Log off menu");
+            Console.WriteLine("Log Off Menu");
             Console.WriteLine("____________\n\n");
             Console.WriteLine("Log off cancelled");
 
@@ -104,7 +106,7 @@ switch (menuChoice)
         else
         {
             Console.Clear();
-            Console.WriteLine("Log off menu");
+            Console.WriteLine("Log Off Menu");
             Console.WriteLine("____________\n\n");
             Console.WriteLine("That wasn't a valid choice.");
             break;
