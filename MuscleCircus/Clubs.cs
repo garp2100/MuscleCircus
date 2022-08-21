@@ -54,16 +54,28 @@ namespace MuscleCircus
 
         public void RemoveMember()
         {
+            BeginRemoveMember:
             Console.Clear();
             Console.WriteLine("Remove Member Menu");
             Console.WriteLine("_______________\n");
 
             Console.Write("What member ID would you like to remove: ");
-            int removeThisID = int.Parse(Console.ReadLine());
+            int removeThisID = 0;
+
+            try
+            {
+                removeThisID = int.Parse(Console.ReadLine());
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("\nNot a valid option. Press any key to start over");
+                Console.ReadKey();
+                goto BeginRemoveMember;
+            }
 
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == removeThisID);
 
-            RemoveMemberLabel:
+            MemberFound:
             if (found.Count() != 0)
             {
                 foreach (var person in found)
@@ -112,9 +124,9 @@ namespace MuscleCircus
                         }
                         else
                         {
-                            Console.WriteLine("\nInvalid option. Press any key to try again.");
+                            Console.WriteLine("\nInvalid option. Press any key to try again");
                             Console.ReadKey();
-                            goto RemoveMemberLabel;
+                            goto MemberFound;
                         }
                     }
                     else if (person is SingleMember single) 
@@ -160,9 +172,9 @@ namespace MuscleCircus
                         }
                         else
                         {
-                            Console.WriteLine("\nInvalid option. Press any key to try again.");
+                            Console.WriteLine("\nInvalid option. Press any key to try again");
                             Console.ReadKey();
-                            goto RemoveMemberLabel;
+                            goto MemberFound;
                         }
                     }
                 }
@@ -178,7 +190,7 @@ namespace MuscleCircus
                 Console.Clear();
                 Console.WriteLine("Remove Member Menu");
                 Console.WriteLine("_______________\n");
-                Console.WriteLine("No Member found to remove.");
+                Console.WriteLine("No Member found to remove");
             }
 
         }
@@ -200,12 +212,14 @@ namespace MuscleCircus
             }
             catch (FormatException e)
             {
-                Console.WriteLine("Not a valid option. Press any key to start over.");
+                Console.WriteLine("\nNot a valid option. Press any key to start over.");
                 Console.ReadKey();
                 continue;
             }
 
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == incomingMemberID);
+
+                DateTime dt = DateTime.Now;
 
                 if (found.Count() != 0)
                 {
@@ -217,7 +231,7 @@ namespace MuscleCircus
                             Console.Clear();
                             Console.WriteLine("Member Check In Menu");
                             Console.WriteLine("_______________\n");
-                            Console.WriteLine("Grand Member " + member.FirstName + " was checked in successfully.\n");
+                            Console.WriteLine("Grand Member " + member.FirstName + " was checked in successfully at " + dt.ToLongTimeString() + "\n");
                             grand.MembershipPointsAdd();
                             Console.WriteLine(member.FirstName + "'s " + "membership points: " + grand.MembershipPoints + "\n");
                             checkInLoop = false;
@@ -227,7 +241,7 @@ namespace MuscleCircus
                             Console.Clear();
                             Console.WriteLine("Member Check In Menu");
                             Console.WriteLine("_______________\n");
-                            Console.WriteLine("Single Member " + single.FirstName + " was checked in successfully.\n");
+                            Console.WriteLine("Single Member " + single.FirstName + " was checked in successfully at " + dt.ToLongTimeString() + "\n");
                             checkInLoop = false;
                         }
                         else
@@ -246,7 +260,7 @@ namespace MuscleCircus
                     Console.Clear();
                     Console.WriteLine("Member Check In Menu");
                     Console.WriteLine("_______________\n");
-                    Console.WriteLine("That member doesn't exist!");
+                    Console.WriteLine("Member ID " + incomingMemberID + " isn't assigned to a member!");
                     checkInLoop = false;
                 }
             }
@@ -260,8 +274,8 @@ namespace MuscleCircus
                 Console.Clear();
                 Console.WriteLine("Print Bill Of Sales Menu");
                 Console.WriteLine("_______________\n\n");
-                Console.WriteLine("Select from the following bill print options:\n\n1.Display bill of sale of a specific person\n\n2.Display bill of sale of all members.");
-
+                Console.WriteLine("Select from the following bill print options:\n\n1.Display bill of sale of a specific person\n\n2.Display bill of sale of all members");
+                Console.WriteLine(); //Line spacing
                 int option = 0;
 
                 try
@@ -270,14 +284,14 @@ namespace MuscleCircus
                 }
                 catch (FormatException e)
                 {
-                    Console.WriteLine("Not a valid option. Press any key to start over.");
+                    Console.WriteLine("Not a valid option. Press any key to start over");
                     Console.ReadKey();
                     continue;
                 }
 
                 if (option == 1)
                 {
-                    BillOfSalesOption1:
+                BillOfSalesOption1:
                     Console.Clear();
                     Console.WriteLine("Print Bill Of Sales Menu");
                     Console.WriteLine("_______________\n\n");
@@ -291,7 +305,7 @@ namespace MuscleCircus
                     }
                     catch (FormatException e)
                     {
-                        Console.WriteLine("Not a valid option. Press any key to start over.");
+                        Console.WriteLine("\nNot a valid option. Press any key to start over");
                         Console.ReadKey();
                         goto BillOfSalesOption1;
                     }
@@ -307,9 +321,9 @@ namespace MuscleCircus
                                 Console.Clear();
                                 Console.WriteLine("Print Bill Of Sales Menu");
                                 Console.WriteLine("_______________\n\n");
-                                Console.WriteLine($"{ ((GrandMember)member).FirstName }'s Bill of sale:");
-                                Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
-                                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
+                                Console.WriteLine($"{((GrandMember)member).FirstName}'s Bill of sale:");
+                                Console.Write($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
+                                Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints + "\n"));
 
                             }
                             else if (member is SingleMember single)
@@ -318,10 +332,9 @@ namespace MuscleCircus
                                 Console.WriteLine("Print Bill Of Sales Menu");
                                 Console.WriteLine("_______________\n\n");
                                 Console.WriteLine($"{single.FirstName}'s Bill of sale:");
-                                Console.Write($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
-
+                                Console.WriteLine($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
                             }
-                        }                      
+                        }
                     }
                     else
                     {
@@ -337,6 +350,7 @@ namespace MuscleCircus
                     Console.Clear();
                     Console.WriteLine("Print Bill Of Sales Menu");
                     Console.WriteLine("_______________");
+
                     foreach (Members member in MembersList)
                     {
                         if (member is GrandMember grand)
@@ -347,19 +361,40 @@ namespace MuscleCircus
                             Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
 
                         }
-                        else if (member is SingleMember single)
+                    }
+
+                    foreach (Members member in MembersList)
+                    {
+                        if (member is SingleMember single)
                         {
                             Console.WriteLine($"\n\n{single.FirstName}'s Bill of sale - ");
                             Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
-
                         }
-
                     }
+
+                    //foreach (Members member in MembersList)
+                    //{
+                    //    if (member is GrandMember grand)
+                    //    {
+
+                    //        Console.WriteLine($"\n\n{((GrandMember)member).FirstName}'s Bill of sale - ");
+                    //        Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
+                    //        Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
+
+                    //    }
+                    //    else if (member is SingleMember single)
+                    //    {
+                    //        Console.WriteLine($"\n\n{single.FirstName}'s Bill of sale - ");
+                    //        Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
+
+                    //    }
+
+                    //}
                     loopChoice = false;
                 }
                 else
                 {
-                    Console.WriteLine("Not a valid option. Press any key to start over.");
+                    Console.WriteLine("\nNot a valid option. Press any key to start over");
                     Console.ReadKey();
                     loopChoice = true;
                 }
@@ -386,6 +421,8 @@ namespace MuscleCircus
             Console.Write("What's the member's address? ");
             newMember.Address = Console.ReadLine();
 
+
+            HomeClubChoice:
             if (newMember is SingleMember single)
             {
                 Console.Clear();
@@ -400,25 +437,42 @@ namespace MuscleCircus
 
                 Console.WriteLine(); //Line spacing
 
-                int homeClubChoice = int.Parse(Console.ReadLine());
+                int homeClubChoice = 0;
+
+                try 
+                { 
+                    homeClubChoice = int.Parse(Console.ReadLine());
+                } 
+                catch (Exception e) 
+                {
+                    Console.WriteLine("\nNot a valid option. Press any key to start over.");
+                    Console.ReadKey();
+                    goto HomeClubChoice;
+                }
+
+                if (homeClubChoice < 1 || homeClubChoice > 6)
+                {
+                    Console.WriteLine("\nNot a valid option. Press any key to start over.");
+                    Console.ReadKey();
+                    goto HomeClubChoice;
+                }
+                
 
                 var homeClubAdd = (Locations)homeClubChoice;
                 single.HomeClub = homeClubAdd.ToString();
             }
 
-            
-
-            //newMember.HomeClub = Locations.Detroit.ToString();
-
             Random rand = new Random();
 
             if (newMember is GrandMember)
             {
-                newMember.Id = rand.Next(500, 599);
+                newMember.Id = rand.Next(50, 59);
+                newMember.CostOfMembership = 20m;
             }
             else
             {
-                newMember.Id = rand.Next(100, 199);
+                newMember.Id = rand.Next(1, 49);
+                newMember.CostOfMembership = 10m;
             }
 
             MembersList.Add(newMember);
