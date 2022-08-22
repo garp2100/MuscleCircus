@@ -12,7 +12,7 @@ namespace MuscleCircus
     {
         public Clubs()
         {
-            Name = "Muscle Circus of Detroit";
+            Name = "Muscle Circus of ";
             Address = Locations.Detroit.ToString();
         }
 
@@ -32,27 +32,119 @@ namespace MuscleCircus
         new SingleMember(11, "Jacob", "Magyar", "321 Woodward Ave", Locations.Detroit)
         };
 
-        public void ListAllMembers()
+        public void LookUpMember() 
         {
+            LookUpMembersStart:
+            int memberID = 0;
+
             Console.Clear();
             Console.WriteLine("List All Members Menu");
-            Console.WriteLine("_______________\n");
+            Console.WriteLine("_______________");
+            Console.WriteLine("(Enter \"0\" to return to the main menu)\n\n");
 
-            List<Members> listOrderedGrand = MembersList.Where(x => x is GrandMember).ToList();
-            List<Members> listOrderedSingle = MembersList.Where(x => x is SingleMember).ToList();
+            Console.WriteLine("Please select an option: ");
+            Console.WriteLine("\n1. Look up member by ID number");
+            Console.WriteLine("\n2. List all members\n");
 
-            foreach (Members member in listOrderedGrand) 
+            string membersInput = Console.ReadLine();
+
+            if (membersInput == "0")
             {
-                Console.WriteLine(member.ToString());
+                Console.Clear(); //Takes back to main menu
             }
-
-            foreach (Members member in listOrderedSingle) 
+            else if (membersInput == "1")
             {
-                Console.WriteLine(member.ToString());
-            }
+            IDInput:
+                Console.Clear();
+                Console.WriteLine("Look Up Member Menu");
+                Console.WriteLine("_______________");
+                Console.WriteLine("(Enter \"0\" to return to the main menu)\n");
+                Console.Write("Enter the member's ID: ");
 
-            Console.WriteLine("\nPress any key to return to the main menu");
-            Console.ReadKey();
+                try
+                {
+                    memberID = int.Parse(Console.ReadLine());
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("\nNot a valid option. Press any key to start over");
+                    Console.ReadKey();
+                    goto IDInput;
+
+                }
+
+                var found = MembersList.FindAll(memberPerson => memberPerson.Id == memberID);
+                if (memberID == 0)
+                {
+
+                }
+                else if (found.Count() != 0)
+                {
+                    foreach (var member in found)
+                    {
+                        if (member is GrandMember grand)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Look Up Member Menu");
+                            Console.WriteLine("_______________\n");
+                            Console.WriteLine(member.ToString());
+                        }
+                        else if (member is SingleMember single)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Look Up Member Menu");
+                            Console.WriteLine("_______________\n");
+                            Console.WriteLine(member.ToString());
+
+                        }
+                        Console.WriteLine("\nPress any key to return to the main menu");
+                        Console.ReadKey();
+                        
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Look Up Member Menu");
+                    Console.WriteLine("_______________\n");
+                    Console.WriteLine("Member ID does not exist");
+                    Console.WriteLine("\nPress any key to return to try again");
+                    Console.ReadKey();
+                    goto IDInput;
+                }
+            }
+            else if (membersInput == "2")
+            {
+                ListAllMembers();
+            }
+            else
+            {
+                Console.WriteLine("\nNot a valid option. Press any key to start over");
+                Console.ReadKey();
+                goto LookUpMembersStart;
+            }
+        }
+        public void ListAllMembers()
+        {
+                Console.Clear();
+                Console.WriteLine("List All Members Menu");
+                Console.WriteLine("_______________\n");
+
+                List<Members> listOrderedGrand = MembersList.Where(x => x is GrandMember).ToList();
+                List<Members> listOrderedSingle = MembersList.Where(x => x is SingleMember).ToList();
+
+                foreach (Members member in listOrderedGrand)
+                {
+                    Console.WriteLine(member.ToString());
+                }
+
+                foreach (Members member in listOrderedSingle)
+                {
+                    Console.WriteLine(member.ToString());
+                }
+
+                Console.WriteLine("\nPress any key to return to the main menu");
+                Console.ReadKey();
         }
 
         public void RemoveMember()
@@ -272,7 +364,11 @@ namespace MuscleCircus
                             Console.WriteLine("Member Check In Menu");
                             Console.WriteLine("_______________\n");
                             Console.WriteLine("Single Member: " + member.FirstName + " " + member.LastName + "\n");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.BackgroundColor = ConsoleColor.DarkRed;
                             Console.WriteLine("This isn't their home club! You cannot out pizza the hut!\n");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.BackgroundColor = ConsoleColor.Black;
                             Console.WriteLine("\nPress any key to return to the main menu");
                             Console.ReadKey();
                             checkInLoop = false;
@@ -397,7 +493,7 @@ namespace MuscleCircus
                         {
 
                             Console.WriteLine($"\n\n{((GrandMember)member).FirstName} {member.LastName} (ID:{member.Id}) | Bill of sale - ");
-                            Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
+                            Console.Write($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
                             Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
 
                         }
@@ -408,7 +504,7 @@ namespace MuscleCircus
                         if (member is SingleMember single)
                         {
                             Console.WriteLine($"\n\n{single.FirstName} {member.LastName} (ID:{member.Id}) | Bill of sale - ");
-                            Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
+                            Console.Write($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
                         }
                     }
 
@@ -475,7 +571,7 @@ namespace MuscleCircus
 
                 foreach (Locations location in Locations.GetValues(typeof(Locations)))
                 {
-                    Console.WriteLine(((int)location).ToString() + ". " + location.ToString().Replace("_", " "));
+                    Console.WriteLine(((int)location).ToString() + ". " + location.ToString().Replace("_", " ")); //To replace the enum underscores with spaces for cities with multiple words.
                 }
 
                 Console.WriteLine(); //Line spacing

@@ -8,13 +8,14 @@ Clubs Detroit = new Clubs();
 StartOfLoop:
 Console.WriteLine("Main Menu");
 Console.WriteLine("____________\n");
-Console.WriteLine("Welcome to "+ Detroit.Name + "!");
+Console.WriteLine("Welcome to "+ Detroit.Name + Detroit.Address + "!");
 Console.WriteLine("\nPlease select an option: ");
 Console.WriteLine("\n1. Check in a member");
 Console.WriteLine("2. Add a member");
 Console.WriteLine("3. Remove a member");
-Console.WriteLine("4. Print a bill of sales");
-Console.WriteLine("5. Log off \n");
+Console.WriteLine("4. Look up a member/List all members");
+Console.WriteLine("5. Print a bill of sales");
+Console.WriteLine("6. Log off \n");
 
 int menuChoice;
 
@@ -80,16 +81,18 @@ switch (menuChoice)
             break;
         case 3:
             Detroit.RemoveMember();
-
             break;
         case 4:
-        Detroit.PrintBillOfSales();
+            Detroit.LookUpMember();
             break;
         case 5:
-        Console.Clear();
-        Console.WriteLine("Log Off Menu");
-        Console.WriteLine("____________\n");
-        Console.Write("Are you sure you want to log off? (y/n): ");
+        Detroit.PrintBillOfSales();
+            break;
+        case 6:
+             Console.Clear();
+             Console.WriteLine("Log Off Menu");
+             Console.WriteLine("____________\n");
+             Console.Write("Are you sure you want to log off? (y/n): ");
 
         string logOffInput = Console.ReadLine().ToLower();
 
