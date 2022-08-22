@@ -17,6 +17,7 @@ namespace MuscleCircus
             HomeClub = aHomeClub.ToString();
             CostOfMembership = 10m;
         }
+
         public   string HomeClub { get; set; }
         public SingleMember()
         {
@@ -32,10 +33,7 @@ namespace MuscleCircus
             String.Format("{0, -15} {1, -15}", "Last name: ", this.LastName) + "\n" +
             String.Format("{0, -15} {1, -15}", "Address: ", this.Address) + "\n" +
             String.Format("{0, -15} {1, -15}", "Home club: ", HomeClub.ToString().Replace("_", " ")) + "\n";
-
             return finalString;
         }
-
-
     }
 }

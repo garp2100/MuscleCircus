@@ -75,15 +75,14 @@ namespace MuscleCircus
                     Console.WriteLine("\nNot a valid option. Press any key to start over");
                     Console.ReadKey();
                     goto IDInput;
-
                 }
 
                 var found = MembersList.FindAll(memberPerson => memberPerson.Id == memberID);
-                if (memberID == 0)
-                {
-
-                }
-                else if (found.Count() != 0)
+                //if (memberID == 0)
+                //{
+                    //do we need this block of code?
+                //}
+                if (found.Count() != 0)
                 {
                     foreach (var member in found)
                     {
@@ -100,11 +99,9 @@ namespace MuscleCircus
                             Console.WriteLine("Look Up Member Menu");
                             Console.WriteLine("_______________\n");
                             Console.WriteLine(member.ToString());
-
                         }
                         Console.WriteLine("\nPress any key to return to the main menu");
-                        Console.ReadKey();
-                        
+                        Console.ReadKey();                        
                     }
                 }
                 else
@@ -129,6 +126,7 @@ namespace MuscleCircus
                 goto LookUpMembersStart;
             }
         }
+
         public void ListAllMembers()
         {
                 Console.Clear();
@@ -174,8 +172,6 @@ namespace MuscleCircus
                 goto BeginRemoveMember;
             }
 
-
-
             var found = MembersList.FindAll(memberPerson => memberPerson.Id == removeThisID);
 
             MemberFound:
@@ -207,7 +203,6 @@ namespace MuscleCircus
                         Console.WriteLine("Are you sure you want to remove this member? (y/n)");
                         Console.WriteLine(); //line spacing
                         string removeChoice = Console.ReadLine().ToLower();
-
 
                         if (removeChoice == "y")
                         {
@@ -257,7 +252,6 @@ namespace MuscleCircus
                         Console.WriteLine(); //line spacing
                         string removeChoice = Console.ReadLine().ToLower();
 
-
                         if (removeChoice == "y")
                         {
                             Console.Clear();
@@ -298,7 +292,6 @@ namespace MuscleCircus
                 Console.WriteLine("\nPress any key to return to the main menu");
                 Console.ReadKey();
             }
-
         }
 
         public void MemberCheckIn()
@@ -336,7 +329,6 @@ namespace MuscleCircus
                 {
                     foreach (var member in found)
                     {
-
                         if (member is GrandMember grand)
                         {
                             Console.Clear();
@@ -345,6 +337,14 @@ namespace MuscleCircus
                             Console.WriteLine("Grand Member " + member.FirstName + " was checked in successfully at " + dt.ToLongTimeString() + "\n");
                             grand.MembershipPointsAdd();
                             Console.WriteLine(member.FirstName + "'s " + "membership points: " + grand.MembershipPoints + "\n");
+                            if (grand.MembershipPoints >= 20 && grand.MembershipPoints <= 20)
+                            {
+                                Console.WriteLine("Congrats " + member.FirstName + "! You get a free pizza for accumulating 20 membership points.");
+                            }
+                            else if (grand.MembershipPoints >= 40 && grand.MembershipPoints <= 40)
+                            {
+                                Console.WriteLine("Congrats " + member.FirstName + "! You get a free session with one of our personal trainers for accumulating 40 points.");
+                            }
                             checkInLoop = false;
                             Console.WriteLine("\nPress any key to return to the main menu");
                             Console.ReadKey();
@@ -425,7 +425,6 @@ namespace MuscleCircus
                     Console.WriteLine("(Enter \"0\" to return to the main menu)\n\n");
                     Console.Write("Enter the member's ID: ");
                     
-
                     int incomingMemberID = 0;
 
                     try
@@ -456,7 +455,6 @@ namespace MuscleCircus
                                 Console.WriteLine($"{((GrandMember)member).FirstName} {member.LastName} (ID:{member.Id}) | Bill of sale:");
                                 Console.Write($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
                                 Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints + "\n"));
-
                             }
                             else if (member is SingleMember single)
                             {
@@ -492,11 +490,9 @@ namespace MuscleCircus
                     {
                         if (member is GrandMember grand)
                         {
-
                             Console.WriteLine($"\n\n{((GrandMember)member).FirstName} {member.LastName} (ID:{member.Id}) | Bill of sale - ");
                             Console.Write($"Amount due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
                             Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
-
                         }
                     }
 
@@ -542,7 +538,6 @@ namespace MuscleCircus
             Console.Write("What's the member's address? (Address Number and Street Name only): ");
             newMember.Address = Console.ReadLine();
 
-
             HomeClubChoice:
             if (newMember is SingleMember single)
             {
@@ -578,7 +573,6 @@ namespace MuscleCircus
                     goto HomeClubChoice;
                 }
                 
-
                 var homeClubAdd = (Locations)homeClubChoice;
                 single.HomeClub = homeClubAdd.ToString();
             }

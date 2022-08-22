@@ -8,15 +8,13 @@ namespace MuscleCircus
 {
      public class GrandMember : Members
     {
-        public GrandMember(int aID, string aFirstName, string aLastName, string aAddress)
-          
+        public GrandMember(int aID, string aFirstName, string aLastName, string aAddress)          
         {
             Id = aID;
             FirstName = aFirstName;
             LastName = aLastName;
             Address = aAddress;
             CostOfMembership = 20m;
-
         }
 
         public GrandMember()
@@ -39,11 +37,7 @@ namespace MuscleCircus
              String.Format("{0, -15} {1, -15}", "Last name: ", this.LastName) + "\n" +
              String.Format("{0, -15} {1, -15}", "Address: ", this.Address) + "\n" +
              String.Format("{0, -15} {1, -15}", "Membership Points: ", this.MembershipPoints) + "\n";
-            
-            return finalString;
+             return finalString;
         }
-
-
-
     }
 }

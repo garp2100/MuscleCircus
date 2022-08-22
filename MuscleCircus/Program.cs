@@ -57,7 +57,7 @@ switch (menuChoice)
             
             string tierChoice = Console.ReadLine().ToLower();
         
-        if (tierChoice == "grand")
+            if (tierChoice == "grand")
             {
                 GrandMember NewMember = new GrandMember();
                 Detroit.AddMember(NewMember);
@@ -113,7 +113,6 @@ switch (menuChoice)
             Console.WriteLine("Log off cancelled");
             Console.WriteLine("\nPress any key to return to the main menu");
             Console.ReadKey();
-
         }
         else
         {
