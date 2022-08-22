@@ -50,9 +50,10 @@ switch (menuChoice)
         case 2:
             Console.Clear();
             Console.WriteLine("Add a Member Menu");
-            Console.WriteLine("____________\n");
-            Console.WriteLine("Is this person going to be a Grand or Single member? (grand/single) ");
-            Console.WriteLine("(Enter \"x\" to return to the main menu)\n");
+            Console.WriteLine("____________");
+            Console.WriteLine("(Enter \"0\" to return to the main menu)\n\n");
+            Console.Write("Is this person going to be a Grand or Single member? (grand/single): ");
+            
             string tierChoice = Console.ReadLine().ToLower();
         
         if (tierChoice == "grand")
@@ -65,7 +66,7 @@ switch (menuChoice)
                 SingleMember NewMember = new SingleMember();
                 Detroit.AddMember(NewMember);
             }
-            else if (tierChoice == "x")
+            else if (tierChoice == "0")
             {
             Console.Clear();
             goto StartOfLoop;
@@ -88,7 +89,7 @@ switch (menuChoice)
         Console.Clear();
         Console.WriteLine("Log Off Menu");
         Console.WriteLine("____________\n");
-        Console.WriteLine("Are you sure you want to log off? (y/n)");
+        Console.Write("Are you sure you want to log off? (y/n): ");
 
         string logOffInput = Console.ReadLine().ToLower();
 
@@ -97,7 +98,7 @@ switch (menuChoice)
             Console.Clear();
             Console.WriteLine("Log Off Menu");
             Console.WriteLine("____________\n");
-            Console.WriteLine("Goodbye! \n\nI am your father’s brother’s nephew’s cousin’s former roommate.");
+            Console.WriteLine("Goodbye! \n\nI am your father’s brother’s nephew’s cousin’s former roommate");
             Thread.Sleep(2500);
             Environment.Exit(0);
         }
@@ -107,18 +108,19 @@ switch (menuChoice)
             Console.WriteLine("Log Off Menu");
             Console.WriteLine("____________\n");
             Console.WriteLine("Log off cancelled");
+            Console.WriteLine("\nPress any key to return to the main menu");
+            Console.ReadKey();
 
         }
         else
         {
-            Console.WriteLine("\nNot a valid input.");
+            Console.WriteLine("\nNot a valid input");
+            Console.WriteLine("\nPress any key to return to the main menu");
+            Console.ReadKey();
             break;
         }
         break;
     }
-
-Console.WriteLine("\nPress any key to return to the main menu");
-Console.ReadKey();
 
 Console.Clear();
 goto StartOfLoop;
