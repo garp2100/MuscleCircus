@@ -20,8 +20,9 @@ namespace MuscleCircus
         public   string HomeClub { get; set; }
         public SingleMember()
         {
-
         }
+
+
 
         public override string  ToString()
         {

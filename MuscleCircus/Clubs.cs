@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics.Metrics;
+using System.Collections;
 
 namespace MuscleCircus
 {
@@ -12,12 +13,18 @@ namespace MuscleCircus
     {
         public Clubs()
         {
+
             Name = "Muscle Circus of ";
             Address = Locations.Detroit.ToString();
+            List<int> setToRemove = new List<int> { 50000000, 50000001, 10000000, 10000001 };
+            PossibleIDS.RemoveAll(x => setToRemove.Contains(x));
+
         }
 
         public string Name { get; set; }
         public string Address { get; set; }
+        public List<int> PossibleIDS = new List<int>(Enumerable.Range(10000000, 59999999).Distinct());
+
 
         // Adding days to a date  
         readonly DateTime today = DateTime.Now; // 12/20/2015 11:48:09 AM  
@@ -26,10 +33,10 @@ namespace MuscleCircus
 
         public List<Members> MembersList = new List<Members>
         {  
-        new GrandMember(50,"Eddy", "Garcia", "100 Circus Way"),
-        new GrandMember(51, "Gustavo", "Rivera", "5000 Chirpus Road"),
-        new SingleMember(10, "Michael", "Swope", "123 HelloWorld Way", Locations.Los_Angeles),
-        new SingleMember(11, "Jacob", "Magyar", "321 Woodward Ave", Locations.Detroit)
+        new GrandMember(50000000,"Eddy", "Garcia", "100 Circus Way"),
+        new GrandMember(50000001, "Gustavo", "Rivera", "5000 Chirpus Road"),
+        new SingleMember(10000000, "Michael", "Swope", "123 HelloWorld Way", Locations.Los_Angeles),
+        new SingleMember(10000001, "Jacob", "Magyar", "321 Woodward Ave", Locations.Detroit)
         };
 
         public void LookUpMember() 
@@ -211,6 +218,7 @@ namespace MuscleCircus
                             Console.WriteLine("_______________\n");
                             MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
                             Console.WriteLine(grand.FirstName + " " + grand.LastName + " was removed successfully\n");
+                            this.PossibleIDS.Add(removeThisID);
                             Console.WriteLine("Going to the List All Members menu...");
                             Thread.Sleep(2500);
                             ListAllMembers();
@@ -259,6 +267,7 @@ namespace MuscleCircus
                             Console.WriteLine("_______________\n");
                             MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
                             Console.WriteLine(single.FirstName + " " + single.LastName + " was removed successfully\n");
+                            this.PossibleIDS.Add(removeThisID);
                             Console.WriteLine("Going to the List All Members menu...");
                             Thread.Sleep(2500);
                             ListAllMembers();
@@ -601,18 +610,23 @@ namespace MuscleCircus
                 single.HomeClub = homeClubAdd.ToString();
             }
 
-            Random rand = new Random();
+      
 
             if (newMember is GrandMember)
             {
-                newMember.Id = rand.Next(50, 59);
+
+                newMember.Id = GetAnID(newMember);
+
                 newMember.CostOfMembership = 20m;
             }
             else
             {
-                newMember.Id = rand.Next(1, 49);
+                //newMember.Id = rand.Next(1, 49);
+                newMember.Id = GetAnID(newMember);
+
                 newMember.CostOfMembership = 10m;
             }
+           
 
             MembersList.Add(newMember);
 
@@ -624,6 +638,36 @@ namespace MuscleCircus
             Thread.Sleep(2500);
 
             ListAllMembers();
+        }
+        private int GetAnID(Members newMember)
+        {
+            var random = new Random();
+            int oneRandomID = 0;
+            if (newMember is GrandMember)
+            {
+                List<int> subsetGrandID = this.PossibleIDS.Where(u => u >= 50000000).ToList();
+                IEnumerable<int> oneRandom = subsetGrandID.OrderBy(x => random.Next()).Take(1);
+                foreach (var item in oneRandom)
+                {
+                    oneRandomID = item;
+                }
+            }
+            else
+            {
+                List<int> subsetSingleID = this.PossibleIDS.Where(u => u <= 49999999).ToList();
+                IEnumerable<int> oneRandom = subsetSingleID.OrderBy(x => random.Next()).Take(1);
+                foreach (var item in oneRandom)
+                {
+                    oneRandomID = item;
+                }
+            }
+
+        
+
+
+            this.PossibleIDS.RemoveAll(x => x == oneRandomID);
+
+            return oneRandomID;
         }
     }
 }
