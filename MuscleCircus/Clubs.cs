@@ -346,6 +346,16 @@ namespace MuscleCircus
                             grand.MembershipPointsAdd();
                             Console.WriteLine(member.FirstName + "'s " + "membership points: " + grand.MembershipPoints + "\n");
                             checkInLoop = false;
+
+                            if (grand.MembershipPoints >= 20 && grand.MembershipPoints <= 20)
+                            {
+                                Console.WriteLine("Congrats " + member.FirstName + "! You get a free pizza for accumulating 20 membership points.\n");
+                            }
+                            else if (grand.MembershipPoints >= 40 && grand.MembershipPoints <= 40)
+                            {
+                                Console.WriteLine("Congrats " + member.FirstName + "! You get a free session with one of our personal trainers for accumulating 40 points.\n");
+                            }
+
                             Console.WriteLine("\nPress any key to return to the main menu");
                             Console.ReadKey();
                         }
