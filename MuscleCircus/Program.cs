@@ -22,7 +22,7 @@ int menuChoice;
 bool success = int.TryParse(Console.ReadLine(), out menuChoice);
 if (success)
 {
-    if (menuChoice >= 1 && menuChoice <= 5)
+    if (menuChoice >= 1 && menuChoice <= 6)
     Console.WriteLine($"{menuChoice}.");
     else
     {
