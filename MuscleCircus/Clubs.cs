@@ -28,8 +28,6 @@ namespace MuscleCircus
 
         // Adding days to a date  
         readonly DateTime today = DateTime.Now; // 12/20/2015 11:48:09 AM  
-        //DateTime newDate2 = today.AddDays(30); // Adding one month(as 30 days)  
-        //Console.WriteLine(newDate2); // 1/19/2016 11:48:09 AM
 
         public List<Members> MembersList = new List<Members>
         {  
@@ -290,12 +288,6 @@ namespace MuscleCircus
                         }
                     }
                 }
-                    //MembersList.RemoveAll(memberPerson => memberPerson.Id == removeThisID);
-
-                    //Console.WriteLine($"{person.FirstName} {person.LastName} with the ID number of " +
-                    //    $"{person.Id} was removed successfully.");
-                    //Thread.Sleep(2500);
-
             }
             else
             {
@@ -519,25 +511,6 @@ namespace MuscleCircus
 
                     Console.WriteLine("\nPress any key to return to the main menu");
                     Console.ReadKey();
-
-                    //foreach (Members member in MembersList)
-                    //{
-                    //    if (member is GrandMember grand)
-                    //    {
-
-                    //        Console.WriteLine($"\n\n{((GrandMember)member).FirstName}'s Bill of sale - ");
-                    //        Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {((GrandMember)member).CostOfMembership.ToString("C2")}\n");
-                    //        Console.WriteLine(String.Format("{0, -15} {1, -15}", "Membership Points: ", grand.MembershipPoints));
-
-                    //    }
-                    //    else if (member is SingleMember single)
-                    //    {
-                    //        Console.WriteLine($"\n\n{single.FirstName}'s Bill of sale - ");
-                    //        Console.Write($"Amout due for the month of {(today.ToString("MMMM yyyy"))}: {single.CostOfMembership.ToString("C2")}\n");
-
-                    //    }
-
-                    //}
                     loopChoice = false;
                 }
                 else
